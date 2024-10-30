@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace LegacySystem
 {
     #region Cliente
-    // Classe Cliente
+
     class Cliente
     {
         public int Id { get; }
@@ -44,7 +44,7 @@ namespace LegacySystem
     #endregion
 
     #region Transacoes
-    // Classe Transações
+
     class Transacao
     {
         public int Id { get; }
@@ -68,7 +68,7 @@ namespace LegacySystem
     #endregion
 
     #region SistemaTransacoes
-    // Classe Sistema Transações
+
     class SistemaTransacoes
     {
         private readonly List<Transacao> _listaDeTransacoes = new List<Transacao>();
@@ -91,7 +91,7 @@ namespace LegacySystem
     #endregion
 
     #region SistemaCliente
-    // Classe Sistema Cliente
+
     class SistemaCliente
     {
         private readonly List<Cliente> _clientes = new List<Cliente>();
@@ -124,7 +124,7 @@ namespace LegacySystem
     #endregion
 
     #region Relatorio
-    // Classe Relatório
+
     class Relatorio
     {
         public void GerarRelatorioCliente(List<Cliente> clientes)
@@ -135,6 +135,14 @@ namespace LegacySystem
                 Console.WriteLine($"Cliente: {cliente.Nome} | Email: {cliente.Email}");
             }
         }
+    }
+    #endregion
+
+    #region Constantes
+
+    public static class Constantes
+    {
+        public const string EmailInvalidoMensagem = "Email inválido.";
     }
     #endregion
 }
