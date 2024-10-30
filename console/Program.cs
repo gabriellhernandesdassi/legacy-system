@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace LegacySystem
 {
-    // Classe para manipulação do sistema principal
+    
     class MainSistema
     {
         static void Main(string[] args)
         {
-            // Constantes para evitar strings mágicas
+            
             const string EmpresaNome = "Empresa Teste";
             const string DescricaoTransacao = "Compra de Insumo";
 
-            SistemaCliente sistemaCliente = new SistemaCliente();
+            var sistemaCliente = new SistemaCliente();
             sistemaCliente.AddCliente(1, "Joao", "joao@email.com");
             sistemaCliente.AddCliente(2, "Maria", "maria@email.com");
 
-            SistemaTransacoes sistemaTransacoes = new SistemaTransacoes();
+            var sistemaTransacoes = new SistemaTransacoes();
             sistemaTransacoes.AdicionarTransacao(1, 100.50m, "Compra de Produto");
             sistemaTransacoes.AdicionarTransacao(2, 200.00m, "Compra de Serviço");
             sistemaTransacoes.AdicionarTransacao(3, 300.75m, "Compra de Software");
@@ -29,11 +29,15 @@ namespace LegacySystem
 
             sistemaCliente.AtualizarNomeCliente(2, "Maria Silva");
 
-            // Exibindo nome da empresa e descrição com loop otimizado
+            
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine($"Nome da Empresa: {EmpresaNome} | Descrição: {DescricaoTransacao}");
             }
+
+            
+            Relatorio relatorio = new Relatorio();
+            relatorio.GerarRelatorioCliente(sistemaCliente.GetClientes());
         }
     }
 
@@ -59,13 +63,15 @@ namespace LegacySystem
         public void AtualizarNomeCliente(int id, string novoNome)
         {
             var cliente = _clientes.Find(c => c.Id == id);
-            if (cliente != null) cliente.Nome = novoNome;
+            if (cliente != null) cliente.MudarNome(novoNome);
         }
 
         public void RemoverCliente(int id)
         {
             _clientes.RemoveAll(c => c.Id == id);
         }
+
+        public List<Cliente> GetClientes() => _clientes;
     }
     #endregion
 
@@ -94,7 +100,7 @@ namespace LegacySystem
     class Cliente
     {
         public int Id { get; }
-        public string Nome { get; set; }
+        public string Nome { get; private set; }
         public string Email { get; }
 
         public Cliente(int id, string nome, string email)
@@ -102,6 +108,14 @@ namespace LegacySystem
             Id = id;
             Nome = nome;
             Email = email;
+        }
+
+        public void MudarNome(string novoNome)
+        {
+            if (!string.IsNullOrWhiteSpace(novoNome))
+            {
+                Nome = novoNome;
+            }
         }
     }
 
@@ -116,6 +130,20 @@ namespace LegacySystem
             Id = id;
             Valor = valor;
             Descricao = descricao;
+        }
+    }
+    #endregion
+
+    #region Relatorio
+    class Relatorio
+    {
+        public void GerarRelatorioCliente(List<Cliente> clientes)
+        {
+            Console.WriteLine("Relatório de Clientes:");
+            foreach (var cliente in clientes)
+            {
+                Console.WriteLine($"Cliente: {cliente.Nome} | Email: {cliente.Email}");
+            }
         }
     }
     #endregion
